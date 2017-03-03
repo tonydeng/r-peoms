@@ -5,6 +5,7 @@ fileName <- "training.txt"
 
 SC <- readChar(fileName, file.info(fileName)$size)
 
+# 分词
 cc = worker()
 
 analysis <- as.data.frame(table(cc[SC]))
@@ -16,8 +17,11 @@ analysis <- analysis[order(-analysis$Freq),]
 names(analysis) <- c("word","freq")
 analysis$word <- as.character(analysis$word)
 
-# 进行分词后，再分析一下各部分的词性
+# 定义词牌 ，李白的《清平乐·画堂晨起》作为范例
+#cipai <- "画堂晨起，来报雪花坠。高卷帘栊看佳瑞，皓色远迷庭砌。盛气光引炉烟，素草寒生玉佩。应是天仙狂醉，乱把白云揉碎。"
 cipai <- "画堂晨起，来报雪花坠。高卷帘栊 看 佳瑞，皓色远 迷 庭砌。盛气光引 炉烟，素草寒生玉佩。应是天仙狂醉，乱把白云揉碎。"
+
+# 对词牌进行分词后，再分析一下各部分的词性
 tagger <- worker("tag")
 cipai_2 <- tagger <= cipai
 
